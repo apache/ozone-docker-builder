@@ -23,7 +23,7 @@ jobs:
       - name: checkout source
         uses: actions/checkout@master
       - name: login with docker 
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${{ github.repository_owner }} --password-stdin ghcr.io
+        run: echo ${{ secrets.GHCR_CONTAINER_PUSH }} | docker login -u ${{ github.repository_owner }} --password-stdin ghcr.io
       - name: build image
         run: docker build -t ghcr.io/$(echo $GITHUB_REPOSITORY | sed 's/docker-//g') .
       - name: push image
