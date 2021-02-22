@@ -12,16 +12,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-name: build
-on:
-  - push
-  - pull_request
-jobs:
-  build:
-    name: build and deploy
-    runs-on: ubuntu-18.04
-    steps:
-      - name: checkout source
-        uses: actions/checkout@master
-      - name: build image
-        run: docker build -t ghcr.io/$(echo $GITHUB_REPOSITORY | sed 's/docker-//g') .
+github:
+  description: "Container image to provide build environment for developing and testing Apache Ozone"
+  homepage: https://ozone.apache.org
+  labels:
+    - ozone
+    - container
+  enabled_merge_buttons:
+    squash:  true
+    merge:   false
+    rebase:  false
+notifications:
+  commits:      commits@ozone.apache.org
+  issues:       issues@ozone.apache.org
+  pullrequests: issues@ozone.apache.org
+  jira_options: link label worklog

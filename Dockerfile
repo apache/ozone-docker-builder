@@ -18,7 +18,7 @@ RUN yum -y install gcc gcc-c++ kernel-devel make autoconf automake libtool which
    java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel\
    docker \
    python-pip \ 
-   file python-devel \
+   file python3-devel \
    curl-devel dh-autoreconf expat-devel getopt gettext-devel openssl-devel perl-devel zlib-devel \
    jq \
    sudo
@@ -54,16 +54,16 @@ RUN mkdir -p /opt && \
 
 #Install apache-ant
 RUN mkdir -p /opt && \
-    curl -sL 'https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=/ant/binaries/apache-ant-1.10.7-bin.tar.gz' | tar -xz  && \
+    curl -sL 'https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=/ant/binaries/apache-ant-1.9.15-bin.tar.gz' | tar -xz  && \
        mv apache-ant* /opt/ant
 
 #Install apache-maven
-RUN curl -sL 'https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz' | tar -xz  && \
+RUN curl -sL 'https://www.apache.org/dyn/mirrors/mirrors.cgi?action=download&filename=maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz' | tar -xz  && \
         mv apache-maven* /opt/maven
 
 #Install docker-compose (for smoketests)
-RUN pip install --upgrade pip
-RUN pip install docker-compose
+RUN pip3 install --upgrade pip
+RUN pip3 install docker-compose
 
 ENV PATH=$PATH:/opt/findbugs/bin:/opt/maven/bin:/opt/ant/bin
 
@@ -80,7 +80,7 @@ RUN echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN ln -s /home/user/.m2 /root/.m2
 
 #blockade test
-RUN pip install virtualenv && virtualenv /opt/blockade && /opt/blockade/bin/pip install pytest==2.8.7 blockade
+RUN pip3 install virtualenv && virtualenv /opt/blockade && /opt/blockade/bin/pip3 install pytest==2.8.7 blockade
 ENV PATH=$PATH:/opt/blockade/bin
 
 #kubectl
@@ -88,7 +88,7 @@ RUN cd /usr/local/bin && \
    curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
    chmod +x ./kubectl
 
-RUN pip install robotframework
+RUN pip3 install robotframework
 
 RUN curl -sL https://github.com/muquit/mailsend-go/releases/download/v1.0.5/mailsend-go_1.0.5_linux-64bit.tar.gz | tar zxf - && mv mailsend-go-dir/mailsend-go /usr/local/bin/ && rm -rf mailsend-go-dir
 
