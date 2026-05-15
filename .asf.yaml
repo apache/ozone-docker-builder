@@ -19,11 +19,24 @@ github:
     - ozone
     - container
   enabled_merge_buttons:
-    squash:  true
-    merge:   false
-    rebase:  false
+    squash: true
+    merge: false
+    rebase: false
+  rulesets:
+    - name: "Default Branch Protection"
+      type: branch
+      branches:
+        includes:
+          - "~DEFAULT_BRANCH"
+          - "release/*"
+          - "rel/*"
+        excludes: []
+      bypass_teams:
+        - root
+      restrict_deletion: true
+      restrict_force_push: true
 notifications:
-  commits:      commits@ozone.apache.org
-  issues:       issues@ozone.apache.org
+  commits: commits@ozone.apache.org
+  issues: issues@ozone.apache.org
   pullrequests: issues@ozone.apache.org
   jira_options: link label worklog
